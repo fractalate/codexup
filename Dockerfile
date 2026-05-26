@@ -1,0 +1,15 @@
+FROM debian
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+        bubblewrap \
+        build-essential \
+        git \
+        npm \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root
+
+RUN npm i -g @openai/codex \
+ && rm -rf /root/.npm
