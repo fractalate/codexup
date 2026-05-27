@@ -10,12 +10,12 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-codexup_state_dir_path="$(realpath "$CODEXUP_HOME_DIR")"
+codexup_home_dir_path="$(realpath "$CODEXUP_HOME_DIR")"
 project_path="$(realpath $1)"
 project_name="$(basename "$project_path")"
 
 exec podman run --rm -ti \
-    -v "$codexup_state_dir_path:/root:rw" \
+    -v "$codexup_home_dir_path:/root:rw" \
     -v "$project_path:/root/$project_name:rw" \
     -w "/root/$project_name" \
     codexup
