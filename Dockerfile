@@ -6,6 +6,7 @@ RUN apt-get update \
         build-essential \
         git \
         npm \
+        ripgrep \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
