@@ -13,7 +13,7 @@ make
 Make sure `codexup` is in your path:
 
 ```bash
-export PATH="$PATH:path/to/codexup"
+export PATH="$PATH:path/to/the/checkout"
 ```
 
 Make sure you set `CODEXUP_HOME_DIR`:
