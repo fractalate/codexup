@@ -10,12 +10,26 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-codexup_home_dir_path="$(realpath "$CODEXUP_HOME_DIR")"
-project_path="$(realpath $1)"
-project_name="$(basename "$project_path")"
+if command -v podman >/dev/null 2>&1; then
+    CONTAINER_RUNTIME=podman
+elif command -v docker >/dev/null 2>&1; then
+    CONTAINER_RUNTIME=docker
+else
+    echo "container runtime not found. please install podman or docker." >&2
+    exit 1
+fi
 
-exec podman run --rm -ti \
-    -v "$codexup_home_dir_path:/root:rw" \
-    -v "$project_path:/root/$project_name:rw" \
-    -w "/root/$project_name" \
+if [ "$1" = "--container-runtime" ]; then
+    echo "$CONTAINER_RUNTIME"
+    exit 0
+fi
+
+CODEXUP_HOME_DIR_PATH="$(realpath "$CODEXUP_HOME_DIR")"
+PROJECT_PATH="$(realpath $1)"
+PROJECT_NAME="$(basename "$PROJECT_PATH")"
+
+exec "$CONTAINER_RUNTIME" run --rm -ti \
+    -v "$CODEXUP_HOME_DIR_PATH:/root:rw" \
+    -v "$PROJECT_PATH:/root/$PROJECT_NAME:rw" \
+    -w "/root/$PROJECT_NAME" \
     codexup

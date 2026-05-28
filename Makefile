@@ -1,7 +1,9 @@
 .PHONY: build clean
 
+CONTAINER_RUNTIME := $(shell ./codexup --container-runtime || echo podman)
+
 build:
-	podman build --tag codexup .
+	$(CONTAINER_RUNTIME) build --tag codexup .
 
 clean:
-	podman rmi codexup
+	$(CONTAINER_RUNTIME) rmi codexup
