@@ -27,9 +27,14 @@ fi
 CODEXUP_HOME_DIR_PATH="$(realpath "$CODEXUP_HOME_DIR")"
 PROJECT_PATH="$(realpath $1)"
 PROJECT_NAME="$(basename "$PROJECT_PATH")"
+CODEXUP_CONTAINER_IMAGE=localhost/codexup:latest
+
+if [ -f "$PROJECT_PATH/.codexup" ]; then
+    . "$PROJECT_PATH/.codexup"
+fi
 
 exec "$CONTAINER_RUNTIME" run --rm -ti \
     -v "$CODEXUP_HOME_DIR_PATH:/root:rw" \
     -v "$PROJECT_PATH:/root/$PROJECT_NAME:rw" \
     -w "/root/$PROJECT_NAME" \
-    codexup
+    "$CODEXUP_CONTAINER_IMAGE"
