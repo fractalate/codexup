@@ -6,4 +6,4 @@ build:
 	$(CONTAINER_RUNTIME) build --tag codexup .
 
 clean:
-	$(CONTAINER_RUNTIME) rmi codexup
+	$(CONTAINER_RUNTIME) rmi -f codexup
